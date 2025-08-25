@@ -1,18 +1,22 @@
 import bodyParser from "body-parser";
 import express from "express";
-import controllers from "./ontroller";
-import kafkaConfig from "./config";
+import controllers from "./controller.js";
+import KafkaConfig from "./config.js";
 
-const app = express()
+const app = express();
 const jsonParser = bodyParser.json();
 
-app.post('/api/send', jsonParser, controllers.sendMessageToKafka)
+app.get('/ping', (req, res) => {
+    res.send('pong');
+});
 
-const kafkaConfig = new kafkaConfig()
-kafkaConfig.consume('my-topic', (value) => {
-    console.log(value)
-})
+app.post('/api/send', jsonParser, controllers.sendMessageToKafka);
+
+const kconf = new KafkaConfig();
+kconf.consume('my-topic', (value) => {
+    console.log(value);
+});
 
 app.listen(8080, () => {
-    console.log("server stgart on 8080 port...")
-})
+    console.log("server start on 8080 port...");
+});

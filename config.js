@@ -1,11 +1,11 @@
-import kafka from "kafkajs";
+import { Kafka } from "kafkajs";
 
-class kafkaConfig {
+class KafkaConfig {
 
     constructor() {
-        this.kafka = new kafka({
+        this.kafka = new Kafka({
             clientId: "nodejs-kafka",
-            brokers: ['localhost:9093'],
+            brokers: ['localhost:29092'],
         })
         this.producer = this.kafka.producer();
         this.consumer = this.kafka.consumer({ groupId: 'test-group' });
@@ -43,4 +43,4 @@ class kafkaConfig {
     }
 }
 
-export default kafkaConfig
+export default KafkaConfig;
