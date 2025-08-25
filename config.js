@@ -31,12 +31,12 @@ class kafkaConfig{
         try{
             await this.consumer.connect()
             await this.consumer.subscribe({topic: topic, fromBeginning: true})
-            await this.consumer.run([
+            await this.consumer.run({
                 eachMessage: async({topic, partition, message}) => {
                     const value = message.value.toString()
                     callback(value)
                 }
-            ])
+         })
         } catch (err){
             console.log(err)
         }
